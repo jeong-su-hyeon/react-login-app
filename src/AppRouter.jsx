@@ -4,9 +4,7 @@ import App from "./App";
 import Login from "./Login";
 import SignUp from "./SignUp";
 import SocialLogin from "./SocialLogin";
-import React, {useState, useEffect} from "react";
-import { BrowserRouter, Routes, Route } from "react_router_dom";
-import { Typography, Box } from "@mui/material";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 // [라우팅 컴포넌트]
 // 페이지 전환 담당

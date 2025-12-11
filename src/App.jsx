@@ -71,20 +71,19 @@ function App() {
   // [상단 네비게이션 바] 
   let navigationBar = (
     <AppBar position='static'>
-      <ToolBar>
+      <Toolbar>
         <Grid justifyContent='space-between' container> 
           <Grid item>
             <Typography variant="h6">오늘의 할 일</Typography> {/* 앱 타이틀 */}
           </Grid>
           <Grid item>
-            <Button color='inherit' raised onClick={signout}>  {/* 버튼 클릭 시 signout 메서드 실행  -> 저장된 토큰 삭제 */}
-              {" "}
+            <Button color='inherit' variant="contained" onClick={signout}>  {/* 버튼 클릭 시 signout 메서드 실행  -> 저장된 토큰 삭제 */}
               {/* 로그아웃 버튼 */}
               로그아웃
             </Button>
           </Grid>
         </Grid>
-      </ToolBar>
+      </Toolbar>
     </AppBar>
   );
 
@@ -111,4 +110,4 @@ function App() {
   return <div className='App'>{content}</div>
 }
 
-export default App
+export default App;
