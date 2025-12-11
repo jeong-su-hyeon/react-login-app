@@ -5,7 +5,7 @@ import { API_BASE_URL } from "../api-config";
 export function call(api, method, request) {
     // [HTTP 헤더] 요청 헤더 및 Concept-Type 설정
     let headers = new Headers( {
-        "Concept-Type": "application/json", 
+        "Content-Type": "application/json", 
     });
 
     // [토큰] 로컬 스토리지에서 ACCESS_TOKEN 가져오기
@@ -31,39 +31,49 @@ export function call(api, method, request) {
     // fetch로 API 호출
     return fetch(options.url, options)
         .then((response) => {
+            // console.log("[응답 상태] ", response.status);
             // 정상 응답 (200 OK)
-            if (response.status == 200) {
-                return response.json();
+            if (response.ok) {
+                if (response.status !== 204) {
+                    return response.json();
+                }
+                return {}; // 204 No Content일 경우 빈 객체 반환
             }
             // 인증 오류 (403 Forbidden)
-            else if (response.status === 403) {
+            else if (response.status === 403 || response.status === 401) {
                 window.location.href = "/login"; // 로그인 페이지로 리다이렉트
             }
-            // 그 외 오류 - Error 객체로 생성
+            //그 외 오류 - Error 객체로 생성
             else {
                 new Error(response);
             }
-        })
-        .catch((error) => {
-            console.log("[HTTP ERROR]");
-            console.log(error);
         });
 }
 
 // [로그인] userDTO를 POST로 전달
 export function signin(userDTO) {
-    return call("/auth/signin", "POST", userDTO).then((response) => {
-        // 로그인 성공 시
-        if (response.token) { 
-            localStorage.setItem("ACCESS_TOKEN", response.token); // 토큰 저장
-            window.location.href = "/"; // 홈으로 리다이렉트
-        }
-    });
+    return call("/auth/signin", "POST", userDTO)
+        .then((response) => {
+            //console.log("[로그인 응답] ", response);
+            //console.log("[JWT] ", response.token);
+            // 로그인 성공 시
+            if (response.token) { 
+                localStorage.setItem("ACCESS_TOKEN", response.token); // 토큰 저장                
+                //console.log("리다이렉트 돼라 제발 좀");
+                // window.location.href = "/"; // 홈으로 리다이렉트
+            }
+            return response;
+        })
+        .catch((error) => {
+            console.error("[로그인 실패] ", error);
+            alert("로그인에 실패했습니다. 아이디와 비밀번호를 확인해주세요");
+            throw error;
+        });
 }
 
 // [로그아웃] 토큰 제거 후 로그인 페이지로 이동
 export function signout() {
-    localStorage.setItem("ACCESS_TOKEN", null); // 토큰 제거
+    localStorage.removeItem("ACCESS_TOKEN"); // 토큰 제거
     window.location.href = "/login"; // 로그인 페이지로 리다이렉트
 }
 

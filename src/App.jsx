@@ -24,6 +24,7 @@ function App() {
   // [조회] 초기 데이터
   // 컴포넌트 마운트 시 할 일 목록 불러오기
   useEffect(() => {
+    // console.log("HOME TOKEN:", localStorage.getItem("ACCESS_TOKEN"));
     call("/todo", "GET", null)  // GET 요청으로 할 일 목록 요청
       .then((response) => {
         setItems(response.data);  // 데이터를 성공적으로 받아오면 items에 저장

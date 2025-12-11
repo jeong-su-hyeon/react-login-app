@@ -4,8 +4,11 @@ import React from "react";
 import { Box, Container, Grid, Typography, TextField, Button } from "@mui/material";
 import { Link } from "react-router-dom";
 import { signin, socialLogin } from "./service/ApiService";
+import { useNavigate } from 'react-router-dom';
 
 function Login() {
+    const navigate = useNavigate();
+
     // 일반 로그인 시, 실행되는 메서드
     const handleSubmit = (event) => {
         event.preventDefault(); // 폼 기본 제출 동작 방지
@@ -15,7 +18,16 @@ function Login() {
         const password = data.get("password");   // 패스워드
 
         // 로그인 API 호출
-        signin({ username: username, password: password });
+        signin({ username: username, password: password })
+            .then((response) => {
+                if (response && response.token) {
+                    navigate("/"); 
+                }
+            })
+            .catch((error) => {
+                // ApiService에서 alert이 뜨지만, 여기서 추가적인 UI 처리를 할 수 있습니다.
+                console.error("로그인 중 오류 발생:", error);
+            });
     };
 
     // 소셜 로그인 시, 실행되는 함수
