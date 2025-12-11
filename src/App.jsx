@@ -24,6 +24,7 @@ function App() {
   // [조회] 초기 데이터
   // 컴포넌트 마운트 시 할 일 목록 불러오기
   useEffect(() => {
+    // console.log("HOME TOKEN:", localStorage.getItem("ACCESS_TOKEN"));
     call("/todo", "GET", null)  // GET 요청으로 할 일 목록 요청
       .then((response) => {
         setItems(response.data);  // 데이터를 성공적으로 받아오면 items에 저장
@@ -56,7 +57,7 @@ function App() {
   let todoItems = items.length > 0 && (
     <Paper style={{margin:16}}>
       <List>
-        {items.map((item) => (
+        {items.map((item) => ( // 목록 렌더링
           <Todo
             item={item}             // Todo 항목 전달 
             key={item.id}           // 고유키
@@ -71,20 +72,19 @@ function App() {
   // [상단 네비게이션 바] 
   let navigationBar = (
     <AppBar position='static'>
-      <ToolBar>
+      <Toolbar>
         <Grid justifyContent='space-between' container> 
           <Grid item>
             <Typography variant="h6">오늘의 할 일</Typography> {/* 앱 타이틀 */}
           </Grid>
           <Grid item>
-            <Button color='inherit' raised onClick={signout}>  {/* 버튼 클릭 시 signout 메서드 실행  -> 저장된 토큰 삭제 */}
-              {" "}
+            <Button color='inherit' variant="contained" onClick={signout}>  {/* 버튼 클릭 시 signout 메서드 실행  -> 저장된 토큰 삭제 */}
               {/* 로그아웃 버튼 */}
               로그아웃
             </Button>
           </Grid>
         </Grid>
-      </ToolBar>
+      </Toolbar>
     </AppBar>
   );
 
@@ -111,4 +111,4 @@ function App() {
   return <div className='App'>{content}</div>
 }
 
-export default App
+export default App;

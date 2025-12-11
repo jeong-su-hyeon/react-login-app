@@ -1,11 +1,14 @@
 // [로그인 컴포넌트]
 // React 및 필요한 컴포넌트, API 함수, 라우팅 컴포넌트
 import React from "react";
-import { Container, Grid, Typography, TextField, Button } from "@mui/material";
+import { Box, Container, Grid, Typography, TextField, Button } from "@mui/material";
 import { Link } from "react-router-dom";
-import { signup, socialLogin } from "./service/ApiService";
+import { signin, socialLogin } from "./service/ApiService";
+import { useNavigate } from 'react-router-dom';
 
 function Login() {
+    const navigate = useNavigate();
+
     // 일반 로그인 시, 실행되는 메서드
     const handleSubmit = (event) => {
         event.preventDefault(); // 폼 기본 제출 동작 방지
@@ -15,7 +18,16 @@ function Login() {
         const password = data.get("password");   // 패스워드
 
         // 로그인 API 호출
-        signup({ username: username, password: password });
+        signin({ username: username, password: password })
+            .then((response) => {
+                if (response && response.token) {
+                    navigate("/"); 
+                }
+            })
+            .catch((error) => {
+                // ApiService에서 alert이 뜨지만, 여기서 추가적인 UI 처리를 할 수 있습니다.
+                console.error("로그인 중 오류 발생:", error);
+            });
     };
 
     // 소셜 로그인 시, 실행되는 함수
@@ -27,8 +39,8 @@ function Login() {
         // 로그인 UI를 감싸는 MUI 컨테이너
         <Container component="main" maxWidth="xs" style={{ marginTop: "8%"}}>
             {/* 상단 제목*/}
-            <Grid container spacing={2}>
-                <Grid item xs={12}>
+            <Grid container columns={12} spacing={2}>
+                <Grid item size={12}>
                     <Typography component="h1" variant="h5">
                         로그인
                     </Typography>    
@@ -36,10 +48,11 @@ function Login() {
             </Grid>
 
             {/* 로그인 폼 */} 
-            <form noValidate onSubmit={handleSubmit}>
+            <form noValidate onSubmit={handleSubmit} style={{width: "100%"}}>
+                {" "}
                 <Grid container spacing={2}>
                     {/* [일반 로그인] */}
-                    <Grid item xs={12}>
+                    <Grid item size={12}>
                         {/* 사용자명 입력 필드 */} 
                         <TextField                           
                             variant="outlined"      // 외곽선 스타일
@@ -51,7 +64,7 @@ function Login() {
                             autoComplete="username" // 자동 완성 힌트 
                         />
                     </Grid>
-                    <Grid item xs={12}>
+                    <Grid item size={12}>
                         {/* 비밀번호 입력 필드 */} 
                         <TextField                           
                             variant="outlined"      // 외곽선 스타일
@@ -65,7 +78,7 @@ function Login() {
                         />
                     </Grid>
 
-                    <Grid item xs={12}>
+                    <Grid item size={12}>
                         {/* 일반 로그인 버튼 */}
                         {/* submit : handleSubmit 메서드 자동 실행 */}
                         <Button type="submit" fullWidth variant="contained" color="primary"> 
@@ -74,55 +87,55 @@ function Login() {
                     </Grid>
 
                     {/* [소셜 로그인] */}
-                    <Grid item xs={12}>
+                    <Grid item size={12}>
                         {/* Google 로그인 버튼 */}
                         <Button
                             onClick={() => handleSocialLogin("google")}
                             fullWidth
                             variant="contained"
-                            style={{ backgroundColor: "#000 "}} // 검정 배경
+                            style={{ backgroundColor: "#000"}} // 검정 배경
                         >
                             구글로 로그인하기
                         </Button>
                     </Grid>
 
-                    <Grid item xs={12}>
+                    <Grid item size={12}>
                         {/* Naver 로그인 버튼 */}
                         <Button
                             onClick={() => handleSocialLogin("naver")}
                             fullWidth
                             variant="contained"
-                            style={{ backgroundColor: "#000 "}} // 검정 배경
+                            style={{ backgroundColor: "#000"}} // 검정 배경
                         >
                             네이버로 로그인하기
                         </Button>
                     </Grid>
 
-                    <Grid item xs={12}>
+                    <Grid item size={12}>
                         {/* Kakao 로그인 버튼 */}
                         <Button
                             onClick={() => handleSocialLogin("kakao")}
                             fullWidth
                             variant="contained"
-                            style={{ backgroundColor: "#000 "}} // 검정 배경
+                            style={{ backgroundColor: "#000"}} // 검정 배경
                         >
                             카카오로 로그인하기
                         </Button>
                     </Grid>
 
-                    <Grid item xs={12}>
+                    <Grid item size={12}>
                         {/* Github 로그인 버튼 */}
                         <Button
                             onClick={() => handleSocialLogin("github")}
                             fullWidth
                             variant="contained"
-                            style={{ backgroundColor: "#000 "}} // 검정 배경
+                            style={{ backgroundColor: "#000"}} // 검정 배경
                         >
                             깃허브로 로그인하기
                         </Button>
                     </Grid>
 
-                    <Grid item >
+                    <Grid item size={12}>
                         {/* 회원가입 이동 링크 */}
                         <Link to="/signup" variant="body2">
                             계정이 없습니까? 여기서 가입하세요.
@@ -135,6 +148,5 @@ function Login() {
     );
 }
 
-// Signup 컴포넌트 외부에서 사용할 수 있도록 e xport
-export default SignUp;
-
+// Login 컴포넌트 외부에서 사용할 수 있도록 export
+export default Login;

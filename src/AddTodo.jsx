@@ -5,7 +5,7 @@ import { Button, Grid,TextField } from "@mui/material"
 // -> 사용자가 입력한 텍스트를 새로운 할 일로 등록
 const AddTodo = (props) => {
     const [item, setItem] = useState({title: "" }); // 입력 필드 상태 관리 (사용자가 입력 중인 할일 데이터)
-    const addItem = props.addItem;                  // 부모로부터 전달받은 addItem 함수
+    const addItem = props.addItem;                  // 사용자가 작성한 데이터를 App 컴포넌트에 전달
 
     // 버튼 클릭 시 실행
     const onButtonClick = () => {
@@ -44,3 +44,5 @@ const AddTodo = (props) => {
         </Grid>
     );
 }
+
+export default AddTodo;

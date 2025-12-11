@@ -29,13 +29,13 @@ function SignUp() {
             <form noValidate onSubmit={handleSubmit}>
                 {/* Grid를 사용해 항목 레이아웃 구성 */}
                 <Grid container spacing={2}>
-                    <Grid item xs={12}>
+                    <Grid item size={12}>
                         {/* 제목 표시 */}
                         <Typography component="h1" variant="h5">
                             계정 생성
                         </Typography>
                     </Grid>
-                    <Grid item xs={12}>
+                    <Grid item size={12}>
                         {/* 사용자명 입력 필드 */}
                         <TextField
                             autoComplete="fname" // 자동 완성 힌트                            
@@ -48,7 +48,7 @@ function SignUp() {
                             autoFocus            // 페이지 진입 시 자동 포커싱
                         />    
                     </Grid>
-                    <Grid item xs={12}>
+                    <Grid item size={12}>
                         {/* 비밀번호 입력 필드 */}
                         <TextField
                             variant="outlined"   // 외곽선 스타일
@@ -61,14 +61,14 @@ function SignUp() {
                             autoComplete="current-password" 
                         /> 
                     </Grid>
-                    <Grid item xs={12}>
+                    <Grid item size={12}>
                         {/* 회원가입 버튼 */}
-                        {/* submit : handleSubmit 메서드 자동 실행 */}
+                        {/* submit : signup 메서드 자동 실행 */}
                         <Button type="submit" fullWidth variant="contained" color="primary"> 
                             계정 생성
                         </Button>
                     </Grid>
-                    <Grid item xs={12}>
+                    <Grid item size={12}>
                         {/* 로그인 페이지로 이동 링크 */}
                         <Link to="/login" variant="body2">
                             이미 계정이 있습니까? 로그인 하세요.

@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import {
     ListItem,
     ListItemText,
@@ -16,7 +16,7 @@ import DeleteOutlined from "@mui/icons-material/DeleteOutlined"; // 삭제 아�
 // 3) 체크박스와 삭제 버튼을 통해 완료 처리, 삭제
 const Todo = (props) => {
     const [item, setItem] = useState(props.item);   // 부모로부터 받은 todo 항목 상태로 초기화 
-    const [readOnly, setReadOnly] = useSate(true);  // 텍스트 입력 필드 읽기 전용 여부 상태 (true)
+    const [readOnly, setReadOnly] = useState(true);  // 텍스트 입력 필드 읽기 전용 여부 상태 (true)
 
     const deleteItem = props.deleteItem; // 삭제 함수 props에서 전달받음
     const editItem = props.editItem;     // 수정 함수 props에서 전달받음
@@ -30,7 +30,7 @@ const Todo = (props) => {
     };
 
     // [체크박스 클릭 시] 실행되는 메서드
-    const checkboxEventHadler = (e) => {
+    const checkboxEventHandler = (e) => {
         item.done = e.target.checked;   // 완료 상태 변경
         editItem(item);                 // 수정된 항목을 부모로 전달
     };
@@ -61,9 +61,31 @@ const Todo = (props) => {
 
             {/* [2] 텍스트 입력 필드 (title 표시 및 수정) */}
             <ListItemText>
-                <InputBase>
-                </InputBase>
+                <InputBase
+                inputProps={{
+                    "aria-label": "naked",
+                    readOnly: readOnly,
+                }}
+                    onClick={turnOffReadOnly}
+                    onKeyDown={turnOnReadOnly}
+                    onChange={editEventHandler}
+                    type="text"
+                    id={item.id}
+                    name={item.id}
+                    value={item.title}
+                    multiline={true}
+                    fullWidth={true}
+                />
             </ListItemText>
+
+             {/* [3] 삭제 버튼 */}
+            <ListItemSecondaryAction>
+                <IconButton aria-label="Delete Todo" onClick={deleteEventHandler}>
+                    <DeleteOutlined />
+                </IconButton>
+            </ListItemSecondaryAction>
         </ListItem>
     );
 }
+
+export default Todo;

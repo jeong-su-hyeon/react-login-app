@@ -45,3 +45,5 @@ const SocialLogin = (props) => {
         );
     }
 }
+
+export default SocialLogin;
