@@ -20,7 +20,6 @@ function AppRouter() {
                 <Routes> {/* 여러 개의 Route를 묶어주는 역할 */}
                     {/* 루트 경로에 App 컴포넌트 렌더링 */}                     
                     <Route path="/" element={<App />} />
-
                     {/* /login 경로에 Login 컴포넌트 렌더링 */}                     
                     <Route path="/login" element={<Login />} />
                     {/* /signup 경로에 SignUp 컴포넌트 렌더링 */}                     
