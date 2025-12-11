@@ -57,7 +57,7 @@ function App() {
   let todoItems = items.length > 0 && (
     <Paper style={{margin:16}}>
       <List>
-        {items.map((item) => (
+        {items.map((item) => ( // 목록 렌더링
           <Todo
             item={item}             // Todo 항목 전달 
             key={item.id}           // 고유키

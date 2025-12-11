@@ -30,7 +30,7 @@ const Todo = (props) => {
     };
 
     // [체크박스 클릭 시] 실행되는 메서드
-    const checkboxEventHadler = (e) => {
+    const checkboxEventHandler = (e) => {
         item.done = e.target.checked;   // 완료 상태 변경
         editItem(item);                 // 수정된 항목을 부모로 전달
     };
@@ -62,17 +62,19 @@ const Todo = (props) => {
             {/* [2] 텍스트 입력 필드 (title 표시 및 수정) */}
             <ListItemText>
                 <InputBase
-                    inputProps={{ "aria-label": "naked" }}
+                inputProps={{
+                    "aria-label": "naked",
+                    readOnly: readOnly,
+                }}
+                    onClick={turnOffReadOnly}
+                    onKeyDown={turnOnReadOnly}
+                    onChange={editEventHandler}
                     type="text"
                     id={item.id}
                     name={item.id}
-                    value={item.title} // <-- 핵심: item.title을 표시
+                    value={item.title}
                     multiline={true}
                     fullWidth={true}
-                    onClick={turnOffReadOnly}
-                    onChange={editEventHandler}
-                    onKeyPress={turnOnReadOnly}
-                    readOnly={readOnly}
                 />
             </ListItemText>
 
